@@ -83,7 +83,7 @@
    ![주소 검색 실행](assets/address-search-launch.png)
 
 3. 검색창에 주소 키워드 입력
-   - 예시: `판교역로 235`, `강남대로`, `세종대로 110`
+   - 예시: `외골길 17-5, 삼부연로`
 
    ![주소 입력](assets/address-search-input.png)
 
