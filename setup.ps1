@@ -18,19 +18,12 @@ Write-Host "If UAC prompt appears, click [Yes]."
 Write-Host ""
 Read-Host "Press Enter to start"
 
-# ─────────────────────────────────────────
-# 1. PowerShell Execution Policy
-# ─────────────────────────────────────────
-Write-Host ""
-Write-Host "[1/6] Setting PowerShell execution policy..."
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-Write-Host "      Done."
 
 # ─────────────────────────────────────────
-# 2. Node.js
+# 1. Node.js
 # ─────────────────────────────────────────
 Write-Host ""
-Write-Host "[2/6] Installing Node.js..."
+Write-Host "[1/5] Installing Node.js..."
 $nodeInstalled = winget list --id OpenJS.NodeJS.LTS 2>$null
 if ($nodeInstalled -match "OpenJS.NodeJS.LTS") {
     Write-Host "      Already installed."
@@ -40,10 +33,10 @@ if ($nodeInstalled -match "OpenJS.NodeJS.LTS") {
 }
 
 # ─────────────────────────────────────────
-# 3. Git
+# 2. Git
 # ─────────────────────────────────────────
 Write-Host ""
-Write-Host "[3/6] Installing Git..."
+Write-Host "[2/5] Installing Git..."
 $gitInstalled = winget list --id Git.Git 2>$null
 if ($gitInstalled -match "Git.Git") {
     Write-Host "      Already installed."
@@ -53,10 +46,10 @@ if ($gitInstalled -match "Git.Git") {
 }
 
 # ─────────────────────────────────────────
-# 4. qpdf
+# 3. qpdf
 # ─────────────────────────────────────────
 Write-Host ""
-Write-Host "[4/6] Installing qpdf..."
+Write-Host "[3/5] Installing qpdf..."
 $qpdfInstalled = winget list --id qpdf.qpdf 2>$null
 if ($qpdfInstalled -match "qpdf.qpdf") {
     Write-Host "      Already installed."
@@ -83,10 +76,10 @@ if ($qpdfBin) {
 }
 
 # ─────────────────────────────────────────
-# 5. Raycast
+# 4. Raycast
 # ─────────────────────────────────────────
 Write-Host ""
-Write-Host "[5/6] Installing Raycast..."
+Write-Host "[4/5] Installing Raycast..."
 $raycastInstalled = winget list --id Raycast.Raycast 2>$null
 if ($raycastInstalled -match "Raycast.Raycast") {
     Write-Host "      Already installed."
@@ -96,10 +89,10 @@ if ($raycastInstalled -match "Raycast.Raycast") {
 }
 
 # ─────────────────────────────────────────
-# 6. npm install
+# 5. npm install
 # ─────────────────────────────────────────
 Write-Host ""
-Write-Host "[6/6] Installing Extension packages..."
+Write-Host "[5/5] Installing Extension packages..."
 
 # Node PATH 반영
 $env:PATH = $env:PATH + ";C:\Program Files\nodejs\"
@@ -115,13 +108,13 @@ Write-Host "      Done."
 # ─────────────────────────────────────────
 Write-Host ""
 Write-Host "============================================"
-Write-Host "  Setup complete!"
+Write-Host "  설치 완료!"
 Write-Host "============================================"
 Write-Host ""
-Write-Host "Next steps:"
-Write-Host "  1. npm run dev will start automatically."
-Write-Host "  2. Open Raycast with Alt + Space."
-Write-Host "  3. Search for the command you want to use."
+Write-Host "다음 단계:"
+Write-Host "  1. 'npm run dev'가 자동 실행됩니다."
+Write-Host "  2. Alt + Space를 눌러서 Raycast를 실행해 보세요."
+Write-Host "  3. 이제 플러그인을 마음껏 사용하세요."
 Write-Host ""
 Read-Host "Press Enter to launch Extension"
 
