@@ -1,4 +1,4 @@
-Set-Location -Path $PSScriptRoot
+﻿Set-Location -Path $PSScriptRoot
 
 Clear-Host
 Write-Host ''
