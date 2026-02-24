@@ -1,131 +1,119 @@
 @echo off
-chcp 65001 > nul
-title Unlock PDF â€” ìžë™ ì„¤ì¹˜
+title Work Tools - Auto Setup
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: ê´€ë¦¬ìž ê¶Œí•œ í™•ì¸ ë° ìž¬ì‹¤í–‰
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: Check Admin Privileges
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo ê´€ë¦¬ìž ê¶Œí•œìœ¼ë¡œ ìž¬ì‹¤í–‰í•©ë‹ˆë‹¤...
     powershell -Command "Start-Process cmd -ArgumentList '/c cd /d ""%~dp0"" && ""%~f0""' -Verb RunAs"
     exit /b
 )
 
-:: ë°°ì¹˜ íŒŒì¼ ìœ„ì¹˜ë¡œ ì´ë™
 cd /d "%~dp0"
 
 cls
 echo.
-echo â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
-echo â•‘      ì—…ë¬´ë³´ì¡° Tool ìžë™ ì„¤ì¹˜ í”„ë¡œê·¸ëž¨  â•‘
-echo â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+echo ============================================
+echo      Work Tools - Auto Setup
+echo ============================================
 echo.
-echo ì´ í”„ë¡œê·¸ëž¨ì€ ì•„ëž˜ í•­ëª©ì„ ìžë™ìœ¼ë¡œ ì„¤ì¹˜í•©ë‹ˆë‹¤.
+echo The following will be installed:
 echo  - Node.js
 echo  - Git
 echo  - qpdf
 echo  - Raycast
-echo  - ì—…ë¬´ë³´ì¡° Tool Extension
+echo  - Work Tools Extension
+echo.
+echo If UAC prompt appears, click [Yes].
 echo.
 pause
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: PowerShell ì‹¤í–‰ ì •ì±… ì„¤ì •
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: PowerShell Execution Policy
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo [1/6] PowerShell ì‹¤í–‰ ì •ì±… ì„¤ì • ì¤‘...
+echo [1/6] Setting PowerShell execution policy...
 powershell -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"
-echo       ì™„ë£Œ âœ“
+echo       Done.
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Node.js ì„¤ì¹˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: Node.js
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo [2/6] Node.js ì„¤ì¹˜ ì¤‘...
+echo [2/6] Installing Node.js...
 winget list --id OpenJS.NodeJS.LTS >nul 2>&1
 if %errorLevel% == 0 (
-    echo       ì´ë¯¸ ì„¤ì¹˜ë˜ì–´ ìžˆìŠµë‹ˆë‹¤ âœ“
+    echo       Already installed.
 ) else (
     winget install OpenJS.NodeJS.LTS --silent --accept-package-agreements --accept-source-agreements
-    echo       ì™„ë£Œ âœ“
+    echo       Done.
 )
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Git ì„¤ì¹˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: Git
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo [3/6] Git ì„¤ì¹˜ ì¤‘...
+echo [3/6] Installing Git...
 winget list --id Git.Git >nul 2>&1
 if %errorLevel% == 0 (
-    echo       ì´ë¯¸ ì„¤ì¹˜ë˜ì–´ ìžˆìŠµë‹ˆë‹¤ âœ“
+    echo       Already installed.
 ) else (
     winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements
-    echo       ì™„ë£Œ âœ“
+    echo       Done.
 )
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: qpdf ì„¤ì¹˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: qpdf
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo [4/6] qpdf ì„¤ì¹˜ ì¤‘...
+echo [4/6] Installing qpdf...
 winget list --id qpdf.qpdf >nul 2>&1
 if %errorLevel% == 0 (
-    echo       ì´ë¯¸ ì„¤ì¹˜ë˜ì–´ ìžˆìŠµë‹ˆë‹¤ âœ“
+    echo       Already installed.
 ) else (
     winget install qpdf.qpdf --silent --accept-package-agreements --accept-source-agreements
-    echo       ì™„ë£Œ âœ“
+    echo       Done.
 )
 
-:: qpdf í™˜ê²½ë³€ìˆ˜ ìžë™ ë“±ë¡
-echo       qpdf í™˜ê²½ë³€ìˆ˜ ë“±ë¡ ì¤‘...
-powershell -Command "$qpdfBin = Get-ChildItem 'C:\Program Files\' -Filter 'bin' -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like '*qpdf*' } | Select-Object -First 1 -ExpandProperty FullName; if ($qpdfBin) { $path = [Environment]::GetEnvironmentVariable('PATH', 'Machine'); if ($path -notlike ('*' + $qpdfBin + '*')) { [Environment]::SetEnvironmentVariable('PATH', $path + ';' + $qpdfBin, 'Machine'); Write-Host '      í™˜ê²½ë³€ìˆ˜ ë“±ë¡ ì™„ë£Œ'; } else { Write-Host '      í™˜ê²½ë³€ìˆ˜ ì´ë¯¸ ë“±ë¡ë˜ì–´ ìžˆìŠµë‹ˆë‹¤'; } } else { Write-Host '      qpdf ê²½ë¡œë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤'; }"
-echo       ì™„ë£Œ âœ“
+echo       Registering qpdf to PATH...
+powershell -Command "$qpdfBin = Get-ChildItem 'C:\Program Files\' -Filter 'bin' -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -like '*qpdf*' } | Select-Object -First 1 -ExpandProperty FullName; if ($qpdfBin) { $path = [Environment]::GetEnvironmentVariable('PATH', 'Machine'); if ($path -notlike ('*' + $qpdfBin + '*')) { [Environment]::SetEnvironmentVariable('PATH', $path + ';' + $qpdfBin, 'Machine'); Write-Host 'PATH registered.'; } else { Write-Host 'PATH already registered.'; } } else { Write-Host 'qpdf path not found.'; }"
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Raycast ì„¤ì¹˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: Raycast
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo [5/6] Raycast ì„¤ì¹˜ ì¤‘...
+echo [5/6] Installing Raycast...
 winget list --id Raycast.Raycast >nul 2>&1
 if %errorLevel% == 0 (
-    echo       ì´ë¯¸ ì„¤ì¹˜ë˜ì–´ ìžˆìŠµë‹ˆë‹¤ âœ“
+    echo       Already installed.
 ) else (
     winget install Raycast.Raycast --silent --accept-package-agreements --accept-source-agreements
-    echo       ì™„ë£Œ âœ“
+    echo       Done.
 )
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Node PATH ìˆ˜ë™ ë°˜ì˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: npm install
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+echo.
+echo [6/6] Installing Extension packages...
 set "PATH=%PATH%;C:\Program Files\nodejs\"
-
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Extension íŒ¨í‚¤ì§€ ì„¤ì¹˜
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-echo.
-echo [6/6] Extension íŒ¨í‚¤ì§€ ì„¤ì¹˜ ì¤‘...
 call npm install
-echo       ì™„ë£Œ âœ“
+echo       Done.
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: ì™„ë£Œ
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+:: Complete
+:: ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
 echo.
-echo â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
-echo â•‘         ì„¤ì¹˜ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤ ðŸŽ‰       â•‘
-echo â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+echo ============================================
+echo   Setup complete!
+echo ============================================
 echo.
-echo ì•„ëž˜ ìˆœì„œë¡œ Extensionì„ ì‹¤í–‰í•˜ì„¸ìš”.
-echo.
-echo  1. ì•„ëž˜ ëª…ë ¹ì´ ìžë™ìœ¼ë¡œ ì‹¤í–‰ë©ë‹ˆë‹¤.
-echo  2. Raycast ê°€ ì‹¤í–‰ë˜ë©´ ì»¤ë§¨ë“œë¥¼ ê²€ìƒ‰í•˜ì„¸ìš”.
-echo  3. ì´í›„ë¶€í„°ëŠ” Raycast ë§Œ ì‹¤í–‰í•˜ë©´ ë©ë‹ˆë‹¤.
-echo     (ê¸°ë³¸ ë‹¨ì¶•í‚¤: Alt + Space)
+echo Next steps:
+echo  1. npm run dev will start automatically.
+echo  2. Open Raycast with Alt + Space.
+echo  3. Search for the command you want to use.
 echo.
 pause
 
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-:: Extension ì‹¤í–‰
-:: â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 call npm run dev
