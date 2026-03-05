@@ -4,6 +4,7 @@ import {
   Form,
   showToast,
   Toast,
+  popToRoot,
 } from "@raycast/api";
 import { useState } from "react";
 import { exec } from "child_process";
@@ -33,7 +34,7 @@ export default function Command() {
     if (!inputPath) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "PDF 파일 선택",
+        title: "PDF 파일을 선택해주세요",
       });
       return;
     }
@@ -44,7 +45,7 @@ export default function Command() {
     if (!password) {
       await showToast({
         style: Toast.Style.Failure,
-        title: "비밀번호 입력",
+        title: "비밀번호를 입력해주세요",
       });
       return;
     }
@@ -60,7 +61,7 @@ export default function Command() {
       if (error) {
         await showToast({
           style: Toast.Style.Failure,
-          title: "잠금 해제 실패",
+          title: "Unlock 실패",
           message: stderr || error.message,
         });
         return;
@@ -71,18 +72,33 @@ export default function Command() {
         title: "PDF 잠금 해제 완료 ✅",
         message: outputPath,
       });
+
+      await popToRoot();
     });
   }
 
   return (
     <Form
       isLoading={isLoading}
+      enableDrafts={false}
+      navigationTitle="Unlock PDF"
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="잠금 해제 실행하기" onSubmit={handleSubmit} />
+          <Action.SubmitForm title="잠금 해제" onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >
+      {/* ESC 키 정상 작동을 위한 포커스 트랩 */}
+      <Form.TextField
+        id="dummy"
+        title=""
+        placeholder="PDF 비밀번호 해제 도구"
+        value=""
+        onChange={() => undefined}
+      />
+
+      <Form.Separator />
+
       <Form.FilePicker
         id="file"
         title="PDF 파일 선택"
@@ -115,6 +131,11 @@ export default function Command() {
           onChange={setCustomPassword}
         />
       )}
+
+      <Form.Description
+        title="실행 방법"
+        text="파일 선택 후 비밀번호를 고르고 Ctrl+Enter 를 누르세요."
+      />
     </Form>
   );
 }
